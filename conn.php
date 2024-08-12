@@ -12,7 +12,8 @@ function sanatize($data, $flag = null){
     $data = stripslashes($data);
     $data = htmlspecialchars($data);
     if($flag == 'email'){
-        $data = filter_var($data, FILTER_SANITIZE_EMAIL);
+        // $data = filter_var($data, FILTER_SANITIZE_EMAIL);
+        // $data = filter_var($data, FILTER_VALIDATE_EMAIL);
     }elseif($flag == 'int'){
         $data = filter_var($data, FILTER_SANITIZE_NUMBER_INT);
     }elseif($flag == 'float'){
@@ -39,5 +40,22 @@ function validae_login(){
         redirect(LOGIN_URL);
     }
 }
+
+function printMessage(){
+    if(isset($_SESSION['submitted']) && $_SESSION['submitted'] == false){
+        echo ERROR_MESSAGE;
+        unset($_SESSION['submitted']);
+        return;
+    }
+    if(isset($_SESSION['submitted']) && $_SESSION['submitted'] == true){
+        echo THANK_YOU_MESSAGE;
+        unset($_SESSION['submitted']);
+        return;
+    }
+
+
+}
+
+
 
 ?>

@@ -1,6 +1,20 @@
 
 <?php
 include 'conn.php';
+
+// Check if the users table exists
+$table_exists = false;
+
+$query = "SHOW TABLES LIKE 'users'";
+$result = mysqli_query($conn, $query);
+
+if(mysqli_num_rows($result) > 0) {
+    $table_exists = true;
+} else {
+    $table_exists = false;
+}
+
+
 if(isset($_POST['email']) && isset($_POST['password'])){
     $email = sanatize($_POST['email'], 'email');
     $password = sanatize($_POST['password']);
@@ -55,6 +69,18 @@ if(isset($_POST['email']) && isset($_POST['password'])){
           <div class="row">
             <div class="col-xl-4 col-lg-5 col-md-6 d-flex flex-column mx-auto">
               <div class="card card-plain mt-8">
+                <?php if(!$table_exists){?>
+                    <div class="alert-alert-danger">
+                        <p>
+                          Projects is not setup. Please add your project details in the <span class="text-success">`config.php`</span> file and run the <span class="text-success">`setup-project.php`</span> file to setup the project.
+                        </p>
+                    </div>
+                    <hr>
+                    <div>
+                      I have added valid configration details in the <span class="text-success">`config.php`</span>.<br>
+                      <a href="setup-project.php" ><button class="btn btn-success mt-3">Proeed to setup project</button></a>
+                    </div>
+                <?php } else{ ?>
                 <div class="card-header pb-0 text-left bg-transparent">
                   <h3 class="font-weight-bolder text-info text-gradient">Welcome back</h3>
                   <p class="mb-0">Enter your email and password to sign in</p>
@@ -74,6 +100,7 @@ if(isset($_POST['email']) && isset($_POST['password'])){
                     </div>
                   </div>
                 </form> 
+                <?php }?>
               </div>
             </div>
           </div>
