@@ -12,8 +12,8 @@ function sanatize($data, $flag = null){
     $data = stripslashes($data);
     $data = htmlspecialchars($data);
     if($flag == 'email'){
-        // $data = filter_var($data, FILTER_SANITIZE_EMAIL);
-        // $data = filter_var($data, FILTER_VALIDATE_EMAIL);
+        $data = filter_var($data, FILTER_SANITIZE_EMAIL);
+        $data = filter_var($data, FILTER_VALIDATE_EMAIL);
     }elseif($flag == 'int'){
         $data = filter_var($data, FILTER_SANITIZE_NUMBER_INT);
     }elseif($flag == 'float'){
